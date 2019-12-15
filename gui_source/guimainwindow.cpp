@@ -36,7 +36,6 @@ GuiMainWindow::GuiMainWindow(QWidget *parent) :
     DialogOptions::loadOptions(&xOptions);
     adjust();
 
-
     if(QCoreApplication::arguments().count()>1)
     {
         QString sFileName=QCoreApplication::arguments().at(1);
