@@ -145,6 +145,8 @@ void GuiMainWindow::processFile(QString sFileName, bool bReload)
                 {
                     ui->widgetViewer->reload();
                 }
+
+                setWindowTitle(sFileName);
             }
             else
             {
@@ -168,6 +170,8 @@ void GuiMainWindow::closeCurrentFile()
         delete pFile;
         pFile=nullptr;
     }
+
+    setWindowTitle(QString("%1 v%2").arg(X_APPLICATIONNAME).arg(X_APPLICATIONVERSION));
 }
 
 void GuiMainWindow::dragEnterEvent(QDragEnterEvent *event)
