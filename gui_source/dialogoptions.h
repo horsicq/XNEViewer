@@ -36,7 +36,7 @@ class DialogOptions : public QDialog
     Q_OBJECT
 
 public:
-    explicit DialogOptions(QWidget *parent,XNEVIEWER::OPTIONS *pOptions);
+    explicit DialogOptions(QWidget *parent,XOptions *pOptions);
     ~DialogOptions();
 
     static void loadOptions(XNEVIEWER::OPTIONS *pOptions);
@@ -48,7 +48,7 @@ private slots:
 
 private:
     Ui::DialogOptions *ui;
-    XNEVIEWER::OPTIONS *pOptions;
+    XOptions *pOptions;
 };
 
 #endif // DIALOGOPTIONS_H

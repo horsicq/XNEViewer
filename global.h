@@ -28,16 +28,16 @@
 #define X_ORGANIZATIONNAME "NTInfo"
 #define X_ORGANIZATIONDOMAIN "ntinfo.biz"
 
-namespace XNEVIEWER
-{
-    struct OPTIONS
-    {
-        bool bScanAfterOpen;
-        bool bSaveLastDirectory;
-        QString sLastDirectory;
-        bool bStayOnTop;
-        bool bSaveBackup;
-    };
-}
+//namespace XNEVIEWER
+//{
+//    struct OPTIONS
+//    {
+//        bool bScanAfterOpen;
+//        bool bSaveLastDirectory;
+//        QString sLastDirectory;
+//        bool bStayOnTop;
+//        bool bSaveBackup;
+//    };
+//}
 
 #endif // _GLOBAL_H
