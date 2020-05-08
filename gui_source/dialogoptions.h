@@ -39,9 +39,6 @@ public:
     explicit DialogOptions(QWidget *parent,XOptions *pOptions);
     ~DialogOptions();
 
-    static void loadOptions(XNEVIEWER::OPTIONS *pOptions);
-    static void saveOptions(XNEVIEWER::OPTIONS *pOptions);
-
 private slots:
     void on_pushButtonOK_clicked();
     void on_pushButtonCancel_clicked();

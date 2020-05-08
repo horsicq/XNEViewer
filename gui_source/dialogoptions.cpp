@@ -29,11 +29,10 @@ DialogOptions::DialogOptions(QWidget *parent, XOptions *pOptions) :
 
     this->pOptions=pOptions;
 
-    ui->checkBoxScanAfterOpen->setChecked(pOptions->bScanAfterOpen);
-    ui->checkBoxSaveLastDirectory->setChecked(pOptions->bSaveLastDirectory);
-
-    ui->checkBoxStayOnTop->setChecked(pOptions->bStayOnTop);
-    ui->checkBoxSaveBackup->setChecked(pOptions->bSaveBackup);
+    ui->checkBoxScanAfterOpen->setChecked(pOptions->getValue(XOptions::ID_SCANAFTEROPEN).toBool());
+    ui->checkBoxSaveLastDirectory->setChecked(pOptions->getValue(XOptions::ID_SAVELASTDIRECTORY).toBool());
+    ui->checkBoxStayOnTop->setChecked(pOptions->getValue(XOptions::ID_STAYONTOP).toBool());
+    ui->checkBoxSaveBackup->setChecked(pOptions->getValue(XOptions::ID_SAVEBACKUP).toBool());
 }
 
 DialogOptions::~DialogOptions()
@@ -41,43 +40,13 @@ DialogOptions::~DialogOptions()
     delete ui;
 }
 
-void DialogOptions::loadOptions(XNEVIEWER::OPTIONS *pOptions)
-{
-    QSettings settings(QApplication::applicationDirPath()+QDir::separator()+"xneviewer.ini",QSettings::IniFormat);
-
-    pOptions->bScanAfterOpen=settings.value("ScanAfterOpen",true).toBool();
-    pOptions->bSaveLastDirectory=settings.value("SaveLastDirectory",true).toBool();
-    pOptions->sLastDirectory=settings.value("LastDirectory","").toString();
-
-    pOptions->bStayOnTop=settings.value("StayOnTop",false).toBool();
-    pOptions->bSaveBackup=settings.value("SaveBackup",true).toBool();
-
-    if(!QDir(pOptions->sLastDirectory).exists())
-    {
-        pOptions->sLastDirectory="";
-    }
-}
-
-void DialogOptions::saveOptions(XNEVIEWER::OPTIONS *pOptions)
-{
-    QSettings settings(QApplication::applicationDirPath()+QDir::separator()+"xneviewer.ini",QSettings::IniFormat);
-
-    settings.setValue("ScanAfterOpen",pOptions->bScanAfterOpen);
-    settings.setValue("SaveLastDirectory",pOptions->bSaveLastDirectory);
-    settings.setValue("LastDirectory",pOptions->sLastDirectory);
-
-    settings.setValue("StayOnTop",pOptions->bStayOnTop);
-    settings.setValue("SaveBackup",pOptions->bSaveBackup);
-}
-
 void DialogOptions::on_pushButtonOK_clicked()
 {
-    pOptions->bScanAfterOpen=ui->checkBoxScanAfterOpen->isChecked();
-    pOptions->bSaveLastDirectory=ui->checkBoxSaveLastDirectory->isChecked();
-    pOptions->bStayOnTop=ui->checkBoxStayOnTop->isChecked();
-    pOptions->bSaveBackup=ui->checkBoxSaveBackup->isChecked();
+    pOptions->setValue(XOptions::ID_SCANAFTEROPEN,ui->checkBoxScanAfterOpen->isChecked());
+    pOptions->setValue(XOptions::ID_SAVELASTDIRECTORY,ui->checkBoxSaveLastDirectory->isChecked());
+    pOptions->setValue(XOptions::ID_STAYONTOP,ui->checkBoxStayOnTop->isChecked());
+    pOptions->setValue(XOptions::ID_SAVEBACKUP,ui->checkBoxSaveBackup->isChecked());
 
-    saveOptions(pOptions);
     this->close();
 }
 
