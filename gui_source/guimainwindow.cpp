@@ -33,7 +33,7 @@ GuiMainWindow::GuiMainWindow(QWidget *parent) :
 
     setAcceptDrops(true);
 
-    xOptions.setFilePath(QApplication::applicationDirPath()+QDir::separator()+"xneviewer.ini");
+    xOptions.setName("xneviewer.ini");
 
     QList<XOptions::ID> listIDs;
 
