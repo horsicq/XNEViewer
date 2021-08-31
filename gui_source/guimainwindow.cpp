@@ -40,7 +40,6 @@ GuiMainWindow::GuiMainWindow(QWidget *parent) :
     listIDs.append(XOptions::ID_STAYONTOP);
     listIDs.append(XOptions::ID_SCANAFTEROPEN);
     listIDs.append(XOptions::ID_SAVELASTDIRECTORY);
-    listIDs.append(XOptions::ID_LASTDIRECTORY);
     listIDs.append(XOptions::ID_SAVEBACKUP);
 
     xOptions.setValueIDs(listIDs);
