@@ -23,9 +23,12 @@
 
 #include <QString>
 
-#define X_APPLICATIONNAME "XNEViewer"
+#define X_APPLICATIONDISPLAYNAME "XNEViewer"
+#define X_APPLICATIONNAME "xneviewer"
 #define X_APPLICATIONVERSION "0.01"
 #define X_ORGANIZATIONNAME "NTInfo"
 #define X_ORGANIZATIONDOMAIN "ntinfo.biz"
+#define X_OPTIONSFILE "xneviewer.ini"
+#define X_SHORTCUTSFILE "shortcuts.ini"
 
 #endif // _GLOBAL_H
