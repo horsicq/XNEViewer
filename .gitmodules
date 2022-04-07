@@ -100,3 +100,6 @@
 [submodule "archive_widget"]
 	path = archive_widget
 	url = https://github.com/horsicq/archive_widget
+[submodule "XInfoDB"]
+	path = XInfoDB
+	url = https://github.com/horsicq/XInfoDB
