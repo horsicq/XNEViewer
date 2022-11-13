@@ -19,23 +19,21 @@
  * SOFTWARE.
  */
 #include "guimainwindow.h"
+
 #include "ui_guimainwindow.h"
 
-GuiMainWindow::GuiMainWindow(QWidget *pParent) :
-    QMainWindow(pParent),
-    ui(new Ui::GuiMainWindow)
-{
+GuiMainWindow::GuiMainWindow(QWidget *pParent) : QMainWindow(pParent), ui(new Ui::GuiMainWindow) {
     ui->setupUi(this);
 
-    g_pFile=nullptr;
+    g_pFile = nullptr;
 
-    setWindowTitle(XOptions::getTitle(X_APPLICATIONDISPLAYNAME,X_APPLICATIONVERSION));
+    setWindowTitle(XOptions::getTitle(X_APPLICATIONDISPLAYNAME, X_APPLICATIONVERSION));
 
     setAcceptDrops(true);
 
     g_xOptions.setName(X_OPTIONSFILE);
 
-//    listIDs.append(XOptions::ID_SAVERECENTFILES);
+    //    listIDs.append(XOptions::ID_SAVERECENTFILES);
     g_xOptions.addID(XOptions::ID_STYLE);
     g_xOptions.addID(XOptions::ID_QSS);
     g_xOptions.addID(XOptions::ID_LANG);
@@ -55,20 +53,18 @@ GuiMainWindow::GuiMainWindow(QWidget *pParent) :
 
     g_xShortcuts.load();
 
-    ui->widgetViewer->setGlobal(&g_xShortcuts,&g_xOptions);
+    ui->widgetViewer->setGlobal(&g_xShortcuts, &g_xOptions);
 
     adjust();
 
-    if(QCoreApplication::arguments().count()>1)
-    {
-        QString sFileName=QCoreApplication::arguments().at(1);
+    if (QCoreApplication::arguments().count() > 1) {
+        QString sFileName = QCoreApplication::arguments().at(1);
 
         processFile(sFileName);
     }
 }
 
-GuiMainWindow::~GuiMainWindow()
-{
+GuiMainWindow::~GuiMainWindow() {
     closeCurrentFile();
     g_xOptions.save();
     g_xShortcuts.save();
@@ -76,133 +72,109 @@ GuiMainWindow::~GuiMainWindow()
     delete ui;
 }
 
-void GuiMainWindow::on_actionOpen_triggered()
-{
-    QString sDirectory=g_xOptions.getLastDirectory();
+void GuiMainWindow::on_actionOpen_triggered() {
+    QString sDirectory = g_xOptions.getLastDirectory();
 
-    QString sFileName=QFileDialog::getOpenFileName(this,tr("Open file..."),sDirectory,tr("All files (*)"));
+    QString sFileName = QFileDialog::getOpenFileName(this, tr("Open file..."), sDirectory, tr("All files (*)"));
 
-    if(!sFileName.isEmpty())
-    {
+    if (!sFileName.isEmpty()) {
         processFile(sFileName);
     }
 }
 
-void GuiMainWindow::on_actionClose_triggered()
-{
+void GuiMainWindow::on_actionClose_triggered() {
     closeCurrentFile();
 }
 
-void GuiMainWindow::on_actionExit_triggered()
-{
+void GuiMainWindow::on_actionExit_triggered() {
     this->close();
 }
 
-void GuiMainWindow::on_actionOptions_triggered()
-{
-    DialogOptions dialogOptions(this,&g_xOptions);
+void GuiMainWindow::on_actionOptions_triggered() {
+    DialogOptions dialogOptions(this, &g_xOptions);
     dialogOptions.exec();
 
     adjust();
 }
 
-void GuiMainWindow::on_actionAbout_triggered()
-{
+void GuiMainWindow::on_actionAbout_triggered() {
     DialogAbout dialogAbout(this);
     dialogAbout.exec();
 }
 
-void GuiMainWindow::adjust()
-{
+void GuiMainWindow::adjust() {
     g_xOptions.adjustStayOnTop(this);
 }
 
-void GuiMainWindow::processFile(QString sFileName)
-{
-    if((sFileName!="")&&(QFileInfo(sFileName).isFile()))
-    {
+void GuiMainWindow::processFile(QString sFileName) {
+    if ((sFileName != "") && (QFileInfo(sFileName).isFile())) {
         g_xOptions.setLastFileName(sFileName);
 
         closeCurrentFile();
 
-        g_pFile=new QFile;
+        g_pFile = new QFile;
 
         g_pFile->setFileName(sFileName);
 
-        if(!g_pFile->open(QIODevice::ReadWrite))
-        {
-            if(!g_pFile->open(QIODevice::ReadOnly))
-            {
+        if (!g_pFile->open(QIODevice::ReadWrite)) {
+            if (!g_pFile->open(QIODevice::ReadOnly)) {
                 closeCurrentFile();
             }
         }
 
-        if(g_pFile)
-        {
+        if (g_pFile) {
             XNE ne(g_pFile);
-            if(ne.isValid())
-            {
+            if (ne.isValid()) {
                 ui->stackedWidgetMain->setCurrentIndex(1);
-                g_formatOptions.bIsImage=false;
-                g_formatOptions.nImageBase=-1;
-                g_formatOptions.nStartType=SNE::TYPE_HEURISTICSCAN;
-                ui->widgetViewer->setData(g_pFile,g_formatOptions,0,0,0);
+                g_formatOptions.bIsImage = false;
+                g_formatOptions.nImageBase = -1;
+                g_formatOptions.nStartType = SNE::TYPE_HEURISTICSCAN;
+                ui->widgetViewer->setData(g_pFile, g_formatOptions, 0, 0, 0);
 
                 ui->widgetViewer->reload();
 
                 adjust();
 
                 setWindowTitle(sFileName);
+            } else {
+                QMessageBox::critical(this, tr("Error"), tr("It is not a valid file"));
             }
-            else
-            {
-                QMessageBox::critical(this,tr("Error"),tr("It is not a valid file"));
-            }
-        }
-        else
-        {
-            QMessageBox::critical(this,tr("Error"),tr("Cannot open file"));
+        } else {
+            QMessageBox::critical(this, tr("Error"), tr("Cannot open file"));
         }
     }
 }
 
-void GuiMainWindow::closeCurrentFile()
-{
+void GuiMainWindow::closeCurrentFile() {
     ui->stackedWidgetMain->setCurrentIndex(0);
 
-    if(g_pFile)
-    {
+    if (g_pFile) {
         g_pFile->close();
         delete g_pFile;
-        g_pFile=nullptr;
+        g_pFile = nullptr;
     }
 
     setWindowTitle(QString("%1 v%2").arg(X_APPLICATIONNAME).arg(X_APPLICATIONVERSION));
 }
 
-void GuiMainWindow::dragEnterEvent(QDragEnterEvent *event)
-{
+void GuiMainWindow::dragEnterEvent(QDragEnterEvent *event) {
     event->acceptProposedAction();
 }
 
-void GuiMainWindow::dragMoveEvent(QDragMoveEvent *event)
-{
+void GuiMainWindow::dragMoveEvent(QDragMoveEvent *event) {
     event->acceptProposedAction();
 }
 
-void GuiMainWindow::dropEvent(QDropEvent *event)
-{
-    const QMimeData* mimeData=event->mimeData();
+void GuiMainWindow::dropEvent(QDropEvent *event) {
+    const QMimeData *mimeData = event->mimeData();
 
-    if(mimeData->hasUrls())
-    {
-        QList<QUrl> urlList=mimeData->urls();
+    if (mimeData->hasUrls()) {
+        QList<QUrl> urlList = mimeData->urls();
 
-        if(urlList.count())
-        {
-            QString sFileName=urlList.at(0).toLocalFile();
+        if (urlList.count()) {
+            QString sFileName = urlList.at(0).toLocalFile();
 
-            sFileName=XBinary::convertFileName(sFileName);
+            sFileName = XBinary::convertFileName(sFileName);
 
             processFile(sFileName);
         }

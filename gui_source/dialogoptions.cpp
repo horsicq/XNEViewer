@@ -19,38 +19,33 @@
  * SOFTWARE.
  */
 #include "dialogoptions.h"
+
 #include "ui_dialogoptions.h"
 
-DialogOptions::DialogOptions(QWidget *parent, XOptions *pOptions) :
-    QDialog(parent),
-    ui(new Ui::DialogOptions)
-{
+DialogOptions::DialogOptions(QWidget *parent, XOptions *pOptions) : QDialog(parent), ui(new Ui::DialogOptions) {
     ui->setupUi(this);
 
-    this->pOptions=pOptions;
+    this->pOptions = pOptions;
 
-    pOptions->setCheckBox(ui->checkBoxScanAfterOpen,XOptions::ID_SCANAFTEROPEN);
-    pOptions->setCheckBox(ui->checkBoxSaveLastDirectory,XOptions::ID_SAVELASTDIRECTORY);
-    pOptions->setCheckBox(ui->checkBoxStayOnTop,XOptions::ID_STAYONTOP);
-    pOptions->setCheckBox(ui->checkBoxSaveBackup,XOptions::ID_SAVEBACKUP);
+    pOptions->setCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCANAFTEROPEN);
+    pOptions->setCheckBox(ui->checkBoxSaveLastDirectory, XOptions::ID_SAVELASTDIRECTORY);
+    pOptions->setCheckBox(ui->checkBoxStayOnTop, XOptions::ID_STAYONTOP);
+    pOptions->setCheckBox(ui->checkBoxSaveBackup, XOptions::ID_SAVEBACKUP);
 }
 
-DialogOptions::~DialogOptions()
-{
+DialogOptions::~DialogOptions() {
     delete ui;
 }
 
-void DialogOptions::on_pushButtonOK_clicked()
-{
-    pOptions->getCheckBox(ui->checkBoxScanAfterOpen,XOptions::ID_SCANAFTEROPEN);
-    pOptions->getCheckBox(ui->checkBoxSaveLastDirectory,XOptions::ID_SAVELASTDIRECTORY);
-    pOptions->getCheckBox(ui->checkBoxStayOnTop,XOptions::ID_STAYONTOP);
-    pOptions->getCheckBox(ui->checkBoxSaveBackup,XOptions::ID_SAVEBACKUP);
+void DialogOptions::on_pushButtonOK_clicked() {
+    pOptions->getCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCANAFTEROPEN);
+    pOptions->getCheckBox(ui->checkBoxSaveLastDirectory, XOptions::ID_SAVELASTDIRECTORY);
+    pOptions->getCheckBox(ui->checkBoxStayOnTop, XOptions::ID_STAYONTOP);
+    pOptions->getCheckBox(ui->checkBoxSaveBackup, XOptions::ID_SAVEBACKUP);
 
     this->close();
 }
 
-void DialogOptions::on_pushButtonCancel_clicked()
-{
+void DialogOptions::on_pushButtonCancel_clicked() {
     this->close();
 }
