@@ -22,7 +22,8 @@
 
 #include "ui_guimainwindow.h"
 
-GuiMainWindow::GuiMainWindow(QWidget *pParent) : QMainWindow(pParent), ui(new Ui::GuiMainWindow) {
+GuiMainWindow::GuiMainWindow(QWidget *pParent) : QMainWindow(pParent), ui(new Ui::GuiMainWindow)
+{
     ui->setupUi(this);
 
     g_pFile = nullptr;
@@ -64,7 +65,8 @@ GuiMainWindow::GuiMainWindow(QWidget *pParent) : QMainWindow(pParent), ui(new Ui
     }
 }
 
-GuiMainWindow::~GuiMainWindow() {
+GuiMainWindow::~GuiMainWindow()
+{
     closeCurrentFile();
     g_xOptions.save();
     g_xShortcuts.save();
@@ -72,7 +74,8 @@ GuiMainWindow::~GuiMainWindow() {
     delete ui;
 }
 
-void GuiMainWindow::on_actionOpen_triggered() {
+void GuiMainWindow::on_actionOpen_triggered()
+{
     QString sDirectory = g_xOptions.getLastDirectory();
 
     QString sFileName = QFileDialog::getOpenFileName(this, tr("Open file..."), sDirectory, tr("All files (*)"));
@@ -82,31 +85,37 @@ void GuiMainWindow::on_actionOpen_triggered() {
     }
 }
 
-void GuiMainWindow::on_actionClose_triggered() {
+void GuiMainWindow::on_actionClose_triggered()
+{
     closeCurrentFile();
 }
 
-void GuiMainWindow::on_actionExit_triggered() {
+void GuiMainWindow::on_actionExit_triggered()
+{
     this->close();
 }
 
-void GuiMainWindow::on_actionOptions_triggered() {
+void GuiMainWindow::on_actionOptions_triggered()
+{
     DialogOptions dialogOptions(this, &g_xOptions);
     dialogOptions.exec();
 
     adjust();
 }
 
-void GuiMainWindow::on_actionAbout_triggered() {
+void GuiMainWindow::on_actionAbout_triggered()
+{
     DialogAbout dialogAbout(this);
     dialogAbout.exec();
 }
 
-void GuiMainWindow::adjust() {
+void GuiMainWindow::adjust()
+{
     g_xOptions.adjustStayOnTop(this);
 }
 
-void GuiMainWindow::processFile(QString sFileName) {
+void GuiMainWindow::processFile(QString sFileName)
+{
     if ((sFileName != "") && (QFileInfo(sFileName).isFile())) {
         g_xOptions.setLastFileName(sFileName);
 
@@ -145,7 +154,8 @@ void GuiMainWindow::processFile(QString sFileName) {
     }
 }
 
-void GuiMainWindow::closeCurrentFile() {
+void GuiMainWindow::closeCurrentFile()
+{
     ui->stackedWidgetMain->setCurrentIndex(0);
 
     if (g_pFile) {
@@ -157,15 +167,18 @@ void GuiMainWindow::closeCurrentFile() {
     setWindowTitle(QString("%1 v%2").arg(X_APPLICATIONNAME).arg(X_APPLICATIONVERSION));
 }
 
-void GuiMainWindow::dragEnterEvent(QDragEnterEvent *event) {
+void GuiMainWindow::dragEnterEvent(QDragEnterEvent *event)
+{
     event->acceptProposedAction();
 }
 
-void GuiMainWindow::dragMoveEvent(QDragMoveEvent *event) {
+void GuiMainWindow::dragMoveEvent(QDragMoveEvent *event)
+{
     event->acceptProposedAction();
 }
 
-void GuiMainWindow::dropEvent(QDropEvent *event) {
+void GuiMainWindow::dropEvent(QDropEvent *event)
+{
     const QMimeData *mimeData = event->mimeData();
 
     if (mimeData->hasUrls()) {

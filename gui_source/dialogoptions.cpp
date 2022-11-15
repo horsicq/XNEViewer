@@ -22,7 +22,8 @@
 
 #include "ui_dialogoptions.h"
 
-DialogOptions::DialogOptions(QWidget *parent, XOptions *pOptions) : QDialog(parent), ui(new Ui::DialogOptions) {
+DialogOptions::DialogOptions(QWidget *parent, XOptions *pOptions) : QDialog(parent), ui(new Ui::DialogOptions)
+{
     ui->setupUi(this);
 
     this->pOptions = pOptions;
@@ -33,11 +34,13 @@ DialogOptions::DialogOptions(QWidget *parent, XOptions *pOptions) : QDialog(pare
     pOptions->setCheckBox(ui->checkBoxSaveBackup, XOptions::ID_SAVEBACKUP);
 }
 
-DialogOptions::~DialogOptions() {
+DialogOptions::~DialogOptions()
+{
     delete ui;
 }
 
-void DialogOptions::on_pushButtonOK_clicked() {
+void DialogOptions::on_pushButtonOK_clicked()
+{
     pOptions->getCheckBox(ui->checkBoxScanAfterOpen, XOptions::ID_SCANAFTEROPEN);
     pOptions->getCheckBox(ui->checkBoxSaveLastDirectory, XOptions::ID_SAVELASTDIRECTORY);
     pOptions->getCheckBox(ui->checkBoxStayOnTop, XOptions::ID_STAYONTOP);
@@ -46,6 +49,7 @@ void DialogOptions::on_pushButtonOK_clicked() {
     this->close();
 }
 
-void DialogOptions::on_pushButtonCancel_clicked() {
+void DialogOptions::on_pushButtonCancel_clicked()
+{
     this->close();
 }
