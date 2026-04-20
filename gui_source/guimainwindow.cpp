@@ -78,7 +78,7 @@ void GuiMainWindow::on_actionOpen_triggered()
 {
     QString sDirectory = g_xOptions.getLastDirectory();
 
-    QString sFileName = QFileDialog::getOpenFileName(this, tr("Open file..."), sDirectory, tr("All files (*)"));
+    QString sFileName = QFileDialog::getOpenFileName(this, tr("Open file") + QString("..."), sDirectory, tr("All files (*)"));
 
     if (!sFileName.isEmpty()) {
         processFile(sFileName);
